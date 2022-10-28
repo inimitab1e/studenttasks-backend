@@ -1,0 +1,1 @@
+rootProject.name = "ru.studenttask.studenttasks-backend"
