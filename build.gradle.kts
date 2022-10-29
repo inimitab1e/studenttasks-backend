@@ -6,6 +6,7 @@ plugins {
     application
     kotlin("jvm") version "1.7.20"
     id("io.ktor.plugin") version "2.1.2"
+    id("org.jetbrains.kotlin.plugin.serialization") version "1.6.10"
 }
 
 group = "ru.studenttask"
@@ -27,6 +28,7 @@ dependencies {
     implementation("io.ktor:ktor-server-auth-jvm:$ktor_version")
     implementation("io.ktor:ktor-server-locations-jvm:$ktor_version")
     implementation("io.ktor:ktor-client-core-jvm:$ktor_version")
+    implementation("io.ktor:ktor-serialization-kotlinx-json:$ktor_version")
     implementation("io.ktor:ktor-client-apache-jvm:$ktor_version")
     implementation("io.ktor:ktor-server-content-negotiation-jvm:$ktor_version")
     implementation("io.ktor:ktor-server-cio-jvm:$ktor_version")

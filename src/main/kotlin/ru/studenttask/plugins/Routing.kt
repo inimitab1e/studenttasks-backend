@@ -1,11 +1,10 @@
 package ru.studenttask.plugins
 
 import io.ktor.server.routing.*
-import io.ktor.http.*
 import io.ktor.server.locations.*
 import io.ktor.server.application.*
 import io.ktor.server.response.*
-import io.ktor.server.request.*
+import kotlinx.serialization.Serializable
 
 fun Application.configureRouting() {
     install(Locations) {
@@ -13,7 +12,7 @@ fun Application.configureRouting() {
 
     routing {
         get("/") {
-            call.respondText("Hello World!")
+            call.respondText("Hello bot")
         }
         get<MyLocation> {
                 call.respondText("Location: name=${it.name}, arg1=${it.arg1}, arg2=${it.arg2}")
