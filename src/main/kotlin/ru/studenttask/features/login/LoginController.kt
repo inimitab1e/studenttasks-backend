@@ -1,3 +1,4 @@
+/*
 package ru.studenttask.features.login
 
 import io.ktor.http.*
@@ -33,4 +34,4 @@ class LoginController(private val call: ApplicationCall) {
             }
         }
     }
-}
+}*/
