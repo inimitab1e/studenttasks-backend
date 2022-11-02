@@ -2,15 +2,13 @@ package ru.studenttask.features.login
 
 import io.ktor.http.*
 import io.ktor.server.application.*
-import io.ktor.server.auth.*
-import io.ktor.server.auth.jwt.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import ru.studenttask.database.tokens.TokenDTO
 import ru.studenttask.database.tokens.Tokens
 import ru.studenttask.database.users.Users
-import ru.studenttask.secure.JwtConfig
+import ru.studenttask.secure.JWT.JwtConfig
 import java.util.*
 
 
