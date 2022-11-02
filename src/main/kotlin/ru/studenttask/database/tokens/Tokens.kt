@@ -7,14 +7,14 @@ import org.jetbrains.exposed.sql.transactions.transaction
 
 object Tokens : Table() {
     private val id = Tokens.varchar("id", 50)
-    private val login = Tokens.varchar("login", 50)
-    private val token = Tokens.varchar("token", 75)
+    private val email = Tokens.varchar("email", 50)
+    private val token = Tokens.varchar("token", 256)
 
     fun insert(tokenDTO: TokenDTO) {
         transaction {
             Tokens.insert {
                 it[id] = tokenDTO.rowId
-                it[login] = tokenDTO.login
+                it[email] = tokenDTO.email
                 it[token] = tokenDTO.token
             }
         }
@@ -28,7 +28,7 @@ object Tokens : Table() {
                         TokenDTO(
                             rowId = it[Tokens.id],
                             token = it[Tokens.token],
-                            login = it[Tokens.login]
+                            email = it[Tokens.email]
                         )
                     }
             }

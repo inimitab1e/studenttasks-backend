@@ -18,26 +18,20 @@ fun Application.configureLoginRouting() {
 
     val jwtConfig = JwtConfig(System.getenv("JWT-SECRET"))
 
-    install(Authentication) {
-        jwt {
-            jwtConfig.configureKtorFeature(this)
-        }
-    }
-
     routing {
         post("/login") {
             val receive = call.receive<LoginReceiveRemote>()
-            val userDTO = Users.fetchUser(receive.login)
+            val userDTO = Users.fetchUser(receive.email)
 
             if (userDTO == null) {
                 call.respond(HttpStatusCode.BadRequest, "User not found")
             } else {
                 if (userDTO.password == receive.password) {
-                    val token = jwtConfig.generateToken(JwtConfig.JwtUser(receive.login))
+                    val token = jwtConfig.generateToken(JwtConfig.JwtUser(receive.email))
                     Tokens.insert(
                         TokenDTO(
                             rowId = UUID.randomUUID().toString(),
-                            login = receive.login,
+                            email = receive.email,
                             token = token
                         )
                     )

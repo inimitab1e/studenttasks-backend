@@ -20,33 +20,27 @@ fun Application.configureRegisterRouting() {
 
     val jwtConfig = JwtConfig(System.getenv("JWT-SECRET"))
 
-    install(Authentication) {
-        jwt {
-            jwtConfig.configureKtorFeature(this)
-        }
-    }
-
     routing {
         post("/register") {
             val registerReceiveRemote = call.receive<RegisterReceiveRemote>()
-            if (!registerReceiveRemote.email.isValidEmail()) {
+            if (!isValidEmail(registerReceiveRemote.email)) {
                 call.respond(HttpStatusCode.BadRequest, "Email is not valid")
             }
 
-            val userDTO = Users.fetchUser(registerReceiveRemote.login)
+            val userDTO = Users.fetchUser(registerReceiveRemote.email)
             if (userDTO != null) {
                 call.respond(HttpStatusCode.Conflict, "User already exists")
             } else {
-                val token = jwtConfig.generateToken(JwtConfig.JwtUser(registerReceiveRemote.login))
+                val token = jwtConfig.generateToken(JwtConfig.JwtUser(registerReceiveRemote.email))
 
                 try {
                     Users.insert(
                         UserDTO(
                             id = UUID.randomUUID().toString(),
-                            login = registerReceiveRemote.login,
-                            password = registerReceiveRemote.password,
                             email = registerReceiveRemote.email,
-                            username = ""
+                            password = registerReceiveRemote.password,
+                            username = "",
+                            salt = ""
                         )
                     )
                 } catch (e: ExposedSQLException) {
@@ -58,7 +52,7 @@ fun Application.configureRegisterRouting() {
                 Tokens.insert(
                     TokenDTO(
                         rowId = UUID.randomUUID().toString(),
-                        login = registerReceiveRemote.login,
+                        email = registerReceiveRemote.email,
                         token = token
                     )
                 )
