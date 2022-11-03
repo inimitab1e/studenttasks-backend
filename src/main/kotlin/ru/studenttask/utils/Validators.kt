@@ -12,3 +12,13 @@ fun isValidEmail(email: String): Boolean {
                 + "([a-zA-Z]+[\\w-]+\\.)+[a-zA-Z]{2,4})$"
     ).matcher(email).matches()
 }
+
+fun isValidPassword(password: String): String {
+    return if (password.isBlank()) {
+        "Empty field"
+    } else if (password.length < 8) {
+        "Less then 8 symbols"
+    } else {
+        "Ok"
+    }
+}

@@ -14,6 +14,7 @@ import ru.studenttask.secure.Hash.HashingService
 import ru.studenttask.secure.Hash.SHA256HashingService
 import ru.studenttask.secure.JWT.JwtConfig
 import ru.studenttask.utils.isValidEmail
+import ru.studenttask.utils.isValidPassword
 import java.util.*
 
 fun Application.configureRegisterRouting() {
@@ -26,6 +27,16 @@ fun Application.configureRegisterRouting() {
             val registerReceiveRemote = call.receive<RegisterReceiveRemote>()
             if (!isValidEmail(registerReceiveRemote.email)) {
                 call.respond(HttpStatusCode.BadRequest, "Email is not valid")
+            }
+
+            val isValidPass = isValidPassword(registerReceiveRemote.password)
+
+            if(isValidPass == "Empty field") {
+                call.respond(HttpStatusCode.Conflict, "Password can not be empty")
+                return@post
+            } else if (isValidPass == "Less then 8 symbols") {
+                call.respond(HttpStatusCode.Conflict, "Password can not be less then 8 symbols")
+                return@post
             }
 
             val userDTO = Users.fetchUser(registerReceiveRemote.email)
