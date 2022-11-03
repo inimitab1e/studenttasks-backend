@@ -41,7 +41,7 @@ fun Application.configureRegisterRouting() {
                             id = UUID.randomUUID().toString(),
                             email = registerReceiveRemote.email,
                             password = saltedHash.hash,
-                            username = "",
+                            username = registerReceiveRemote.username,
                             salt = saltedHash.salt
                         )
                     )

@@ -19,7 +19,7 @@ object Users : Table() {
                 it[password] = userDTO.password
                 it[username] = userDTO.username
                 it[email] = userDTO.email
-                it[salt] = ""
+                it[salt] = userDTO.salt
             }
         }
     }
@@ -33,7 +33,7 @@ object Users : Table() {
                     password = userModel[password],
                     username = userModel[username],
                     email = userModel[Users.email],
-                    salt = ""
+                    salt = userModel[salt]
                 )
             }
         } catch (e: Exception) {

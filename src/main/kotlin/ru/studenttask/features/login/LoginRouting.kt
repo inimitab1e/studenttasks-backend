@@ -8,12 +8,15 @@ import io.ktor.server.routing.*
 import ru.studenttask.database.tokens.TokenDTO
 import ru.studenttask.database.tokens.Tokens
 import ru.studenttask.database.users.Users
+import ru.studenttask.secure.Hash.SHA256HashingService
+import ru.studenttask.secure.Hash.SaltedHash
 import ru.studenttask.secure.JWT.JwtConfig
 import java.util.*
 
 
 fun Application.configureLoginRouting() {
 
+    val hashingService = SHA256HashingService()
     val jwtConfig = JwtConfig(System.getenv("JWT-SECRET"))
 
     routing {
@@ -24,7 +27,16 @@ fun Application.configureLoginRouting() {
             if (userDTO == null) {
                 call.respond(HttpStatusCode.BadRequest, "User not found")
             } else {
-                if (userDTO.password == receive.password) {
+
+                val isValidPassword = hashingService.verify(
+                    value = receive.password,
+                    saltedHash = SaltedHash(
+                        hash = userDTO.password,
+                        salt = userDTO.salt
+                    )
+                )
+
+                if (isValidPassword) {
                     val token = jwtConfig.generateToken(JwtConfig.JwtUser(receive.email))
                     Tokens.insert(
                         TokenDTO(
