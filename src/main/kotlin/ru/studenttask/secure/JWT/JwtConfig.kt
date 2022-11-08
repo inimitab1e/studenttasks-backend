@@ -5,6 +5,7 @@ import com.auth0.jwt.JWTVerifier
 import com.auth0.jwt.algorithms.Algorithm
 import io.ktor.server.auth.*
 import io.ktor.server.auth.jwt.*
+import java.util.*
 
 class JwtConfig(jwtSecret: String) {
 
@@ -12,7 +13,7 @@ class JwtConfig(jwtSecret: String) {
         // jwt config
         private const val jwtIssuer = "ru.studenttask"
         private const val jwtRealm = "ru.studenttask"
-        private val secret = System.getenv("JWT-SECRET")
+        private const val expiresIn = 120000
 
         // claims
         private const val CLAIM_LOGIN = "login"
@@ -30,6 +31,7 @@ class JwtConfig(jwtSecret: String) {
     fun generateToken(user: JwtUser): String = JWT.create()
         .withSubject("Authentication")
         .withIssuer(jwtIssuer)
+        .withExpiresAt(Date(System.currentTimeMillis() + expiresIn))
         .withClaim(CLAIM_LOGIN, user.login)
         .sign(jwtAlgorithm)
 
