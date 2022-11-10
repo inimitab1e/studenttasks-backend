@@ -10,5 +10,6 @@ data class RegisterReceiveRemote(
 
 @Serializable
 data class RegisterResponseRemote(
-    val token: String
+    val accessToken: String,
+    val refreshToken: String
 )

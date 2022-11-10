@@ -13,7 +13,8 @@ class JwtConfig(jwtSecret: String) {
         // jwt config
         private const val jwtIssuer = "ru.studenttask"
         private const val jwtRealm = "ru.studenttask"
-        private const val expiresIn = 120000
+        private const val expiresInAccess = 120000
+        private const val expiresInRefresh = 120000000
 
         // claims
         private const val CLAIM_EMAIL = "email"
@@ -28,11 +29,20 @@ class JwtConfig(jwtSecret: String) {
     /**
      * Generate a token for a authenticated user
      */
-    fun generateToken(user: JwtUser): String = JWT.create()
+    fun generateAccessToken(user: JwtUser): String = JWT.create()
         .withSubject("Authentication")
         .withIssuer(jwtIssuer)
-        .withExpiresAt(Date(System.currentTimeMillis() + expiresIn))
+        .withExpiresAt(Date(System.currentTimeMillis() + expiresInAccess))
         .withClaim(CLAIM_EMAIL, user.email)
+        .withClaim("tokenType", "accessToken")
+        .sign(jwtAlgorithm)
+
+    fun generateRefreshToken(user: JwtUser) = JWT.create()
+        .withSubject("Authentication")
+        .withIssuer(jwtIssuer)
+        .withClaim(CLAIM_EMAIL, user.email)
+        .withClaim("tokenType", "refreshToken")
+        .withExpiresAt(Date(System.currentTimeMillis() + expiresInRefresh))
         .sign(jwtAlgorithm)
 
     /**

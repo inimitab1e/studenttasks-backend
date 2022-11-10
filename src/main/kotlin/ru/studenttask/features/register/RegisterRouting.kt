@@ -43,8 +43,8 @@ fun Application.configureRegisterRouting() {
                 call.respond(HttpStatusCode.Conflict, "User already exists")
             } else {
                 val saltedHash = hashingService.generateSaltedHash(registerReceiveRemote.password)
-                val token = jwtConfig.generateToken(JwtConfig.JwtUser(registerReceiveRemote.email))
-
+                val accessToken = jwtConfig.generateAccessToken(JwtConfig.JwtUser(registerReceiveRemote.email))
+                val refreshToken = jwtConfig.generateRefreshToken(JwtConfig.JwtUser(registerReceiveRemote.email))
                 try {
                     Users.insert(
                         UserDTO(
@@ -65,11 +65,11 @@ fun Application.configureRegisterRouting() {
                     TokenDTO(
                         rowId = UUID.randomUUID().toString(),
                         email = registerReceiveRemote.email,
-                        token = token
+                        token = accessToken
                     )
                 )
 
-                call.respond(RegisterResponseRemote(token = token))
+                call.respond(RegisterResponseRemote(accessToken = accessToken, refreshToken = refreshToken))
             }
         }
     }

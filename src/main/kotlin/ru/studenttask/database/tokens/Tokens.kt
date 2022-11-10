@@ -8,7 +8,7 @@ import org.jetbrains.exposed.sql.transactions.transaction
 object Tokens : Table() {
     private val id = Tokens.varchar("id", 50)
     private val email = Tokens.varchar("email", 50)
-    private val token = Tokens.varchar("token", 256)
+    private val token = Tokens.varchar("token", 600)
 
     fun insert(tokenDTO: TokenDTO) {
         transaction {

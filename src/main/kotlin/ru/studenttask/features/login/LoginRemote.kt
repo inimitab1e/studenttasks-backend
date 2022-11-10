@@ -9,5 +9,6 @@ data class LoginReceiveRemote(
 
 @Serializable
 data class LoginResponseRemote(
-    val token: String
+    val accessToken: String,
+    val refreshToken: String
 )
