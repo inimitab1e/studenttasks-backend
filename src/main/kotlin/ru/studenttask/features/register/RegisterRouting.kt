@@ -10,7 +10,6 @@ import ru.studenttask.database.tokens.TokenDTO
 import ru.studenttask.database.tokens.Tokens
 import ru.studenttask.database.users.UserDTO
 import ru.studenttask.database.users.Users
-import ru.studenttask.secure.Hash.HashingService
 import ru.studenttask.secure.Hash.SHA256HashingService
 import ru.studenttask.secure.JWT.JwtConfig
 import ru.studenttask.utils.isValidEmail

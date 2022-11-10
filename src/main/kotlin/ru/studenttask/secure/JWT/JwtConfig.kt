@@ -16,7 +16,7 @@ class JwtConfig(jwtSecret: String) {
         private const val expiresIn = 120000
 
         // claims
-        private const val CLAIM_LOGIN = "login"
+        private const val CLAIM_EMAIL = "email"
     }
 
     private val jwtAlgorithm = Algorithm.HMAC512(jwtSecret)
@@ -32,7 +32,7 @@ class JwtConfig(jwtSecret: String) {
         .withSubject("Authentication")
         .withIssuer(jwtIssuer)
         .withExpiresAt(Date(System.currentTimeMillis() + expiresIn))
-        .withClaim(CLAIM_LOGIN, user.login)
+        .withClaim(CLAIM_EMAIL, user.email)
         .sign(jwtAlgorithm)
 
     /**
@@ -42,10 +42,10 @@ class JwtConfig(jwtSecret: String) {
         verifier(jwtVerifier)
         realm = jwtRealm
         validate {
-            val login = it.payload.getClaim(CLAIM_LOGIN).asString()
+            val email = it.payload.getClaim(CLAIM_EMAIL).asString()
 
-            if (login != null) {
-                JwtUser(login)
+            if (email != null) {
+                JwtUser(email)
             } else {
                 null
             }
@@ -55,6 +55,6 @@ class JwtConfig(jwtSecret: String) {
     /**
      * POKO, that contains information of an authenticated user that is authenticated via jwt
      */
-    data class JwtUser(val login: String): Principal
+    data class JwtUser(val email: String): Principal
 
 }
