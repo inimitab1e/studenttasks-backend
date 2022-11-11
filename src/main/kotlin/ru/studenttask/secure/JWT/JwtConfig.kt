@@ -62,6 +62,10 @@ class JwtConfig(jwtSecret: String) {
         }
     }
 
+ /*   fun checkExpired(token: String) {
+        token.
+    }*/
+
     /**
      * POKO, that contains information of an authenticated user that is authenticated via jwt
      */

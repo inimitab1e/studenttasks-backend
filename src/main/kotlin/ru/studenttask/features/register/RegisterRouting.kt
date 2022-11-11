@@ -65,7 +65,7 @@ fun Application.configureRegisterRouting() {
                     TokenDTO(
                         rowId = UUID.randomUUID().toString(),
                         email = registerReceiveRemote.email,
-                        token = accessToken
+                        token = refreshToken
                     )
                 )
 

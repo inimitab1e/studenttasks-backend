@@ -1,9 +1,9 @@
 package ru.studenttask.database.tokens
 
-import org.jetbrains.exposed.sql.Table
-import org.jetbrains.exposed.sql.insert
-import org.jetbrains.exposed.sql.selectAll
+import org.jetbrains.exposed.sql.*
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.transactions.transaction
+import ru.studenttask.database.users.Users
 
 object Tokens : Table() {
     private val id = Tokens.varchar("id", 50)
@@ -20,20 +20,32 @@ object Tokens : Table() {
         }
     }
 
-    fun fetchTokens(): List<TokenDTO> {
+/*    fun delete(token: String) {
+        transaction {
+            Tokens.deleteWhere { Tokens.token eq token }
+        }
+    }*/
+
+    fun updateToken(email: String, newToken: String) {
+        transaction {
+            Tokens.update({ Tokens.email eq email }) {
+                it[token] = newToken
+            }
+        }
+    }
+
+    fun fetchTokens(refresh: String): TokenDTO? {
         return try {
             transaction {
-                Tokens.selectAll().toList()
-                    .map {
-                        TokenDTO(
-                            rowId = it[Tokens.id],
-                            token = it[Tokens.token],
-                            email = it[Tokens.email]
-                        )
-                    }
+                val refreshModel = Tokens.select { Tokens.token.eq(token) }.single()
+                TokenDTO(
+                    rowId = refreshModel[Tokens.id],
+                    email = refreshModel[Tokens.email],
+                    token = refreshModel[Tokens.token]
+                )
             }
         } catch (e: Exception) {
-            emptyList()
+            null
         }
     }
 }

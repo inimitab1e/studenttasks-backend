@@ -39,13 +39,7 @@ fun Application.configureLoginRouting() {
                 if (isValidPassword) {
                     val accessToken = jwtConfig.generateAccessToken(JwtConfig.JwtUser(receive.email))
                     val refreshToken = jwtConfig.generateRefreshToken(JwtConfig.JwtUser(receive.email))
-                    Tokens.insert(
-                        TokenDTO(
-                            rowId = UUID.randomUUID().toString(),
-                            email = receive.email,
-                            token = accessToken
-                        )
-                    )
+                    Tokens.updateToken(receive.email, refreshToken)
                     call.respond(LoginResponseRemote(accessToken = accessToken, refreshToken = refreshToken))
                 } else {
                     call.respond(HttpStatusCode.BadRequest, "Invalid password")

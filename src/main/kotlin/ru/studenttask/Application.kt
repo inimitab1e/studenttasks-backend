@@ -6,6 +6,7 @@ import io.ktor.server.engine.*
 import io.ktor.server.cio.*
 import org.jetbrains.exposed.sql.Database
 import ru.studenttask.features.login.configureLoginRouting
+import ru.studenttask.features.refresh.configureRefreshRouting
 import ru.studenttask.features.register.configureRegisterRouting
 import ru.studenttask.plugins.*
 
@@ -19,6 +20,7 @@ fun main() {
         configureRouting()
         configureRegisterRouting()
         configureLoginRouting()
+        configureRefreshRouting()
         configureSerialization()
     }.start(wait = true)
 }
