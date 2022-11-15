@@ -34,14 +34,12 @@ class JwtConfig(jwtSecret: String) {
         .withIssuer(jwtIssuer)
         .withExpiresAt(Date(System.currentTimeMillis() + expiresInAccess))
         .withClaim(CLAIM_EMAIL, user.email)
-        .withClaim("tokenType", "accessToken")
         .sign(jwtAlgorithm)
 
     fun generateRefreshToken(user: JwtUser) = JWT.create()
         .withSubject("Authentication")
         .withIssuer(jwtIssuer)
         .withClaim(CLAIM_EMAIL, user.email)
-        .withClaim("tokenType", "refreshToken")
         .withExpiresAt(Date(System.currentTimeMillis() + expiresInRefresh))
         .sign(jwtAlgorithm)
 

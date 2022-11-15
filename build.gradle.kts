@@ -42,6 +42,7 @@ dependencies {
 
     implementation("org.postgresql:postgresql:42.2.2")
     implementation("com.zaxxer:HikariCP:5.0.1")
+    implementation("io.github.microutils:kotlin-logging-jvm:3.0.2")
 
     implementation("io.ktor:ktor-client-apache-jvm:$ktor_version")
     implementation("io.ktor:ktor-server-content-negotiation-jvm:$ktor_version")
