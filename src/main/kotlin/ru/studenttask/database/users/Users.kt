@@ -1,8 +1,6 @@
 package ru.studenttask.database.users
 
-import org.jetbrains.exposed.sql.Table
-import org.jetbrains.exposed.sql.insert
-import org.jetbrains.exposed.sql.select
+import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 
 object Users : Table() {
@@ -22,6 +20,18 @@ object Users : Table() {
                 it[salt] = userDTO.salt
             }
         }
+    }
+
+    fun selectAllUsers(): List<UsersListDTO> {
+        val users = transaction {
+            Users.selectAll().map {
+                UsersListDTO(
+                  username = it[Users.username],
+                  email = it[Users.email]
+                )
+            }
+        }
+        return users
     }
 
     fun fetchUser(email: String): UserDTO? {
