@@ -3,8 +3,10 @@ package ru.studenttask.secure.JWT
 import com.auth0.jwt.JWT
 import com.auth0.jwt.JWTVerifier
 import com.auth0.jwt.algorithms.Algorithm
+import io.ktor.http.*
 import io.ktor.server.auth.*
 import io.ktor.server.auth.jwt.*
+import io.ktor.server.response.*
 import java.util.*
 
 class JwtConfig(jwtSecret: String) {
@@ -58,11 +60,10 @@ class JwtConfig(jwtSecret: String) {
                 null
             }
         }
+        challenge { defaultScheme, realm ->
+            call.respond(HttpStatusCode.Unauthorized, "Token is not valid or has expired")
+        }
     }
-
- /*   fun checkExpired(token: String) {
-        token.
-    }*/
 
     /**
      * POKO, that contains information of an authenticated user that is authenticated via jwt
