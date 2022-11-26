@@ -43,8 +43,8 @@ fun Application.configureRegisterRouting() {
                 call.respond(HttpStatusCode.Conflict, "User already exists")
             } else {
                 val saltedHash = hashingService.generateSaltedHash(registerReceiveRemote.password)
-                val accessToken = jwtConfig.generateAccessToken(JwtConfig.JwtUser(registerReceiveRemote.email))
-                val refreshToken = jwtConfig.generateRefreshToken(JwtConfig.JwtUser(registerReceiveRemote.email))
+                val accessToken = jwtConfig.generateAccessToken(registerReceiveRemote.email)
+                val refreshToken = jwtConfig.generateRefreshToken(registerReceiveRemote.email)
                 try {
                     Users.insert(
                         UserDTO(

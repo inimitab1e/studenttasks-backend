@@ -37,8 +37,8 @@ fun Application.configureLoginRouting() {
                 )
 
                 if (isValidPassword) {
-                    val accessToken = jwtConfig.generateAccessToken(JwtConfig.JwtUser(receive.email))
-                    val refreshToken = jwtConfig.generateRefreshToken(JwtConfig.JwtUser(receive.email))
+                    val accessToken = jwtConfig.generateAccessToken(receive.email)
+                    val refreshToken = jwtConfig.generateRefreshToken(receive.email)
                     Tokens.updateToken(receive.email, refreshToken)
                     call.respond(LoginResponseRemote(accessToken = accessToken, refreshToken = refreshToken))
                 } else {

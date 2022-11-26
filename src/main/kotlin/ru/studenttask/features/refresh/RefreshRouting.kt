@@ -20,8 +20,8 @@ fun Application.configureRefreshRouting() {
             if (refreshDTO == null) {
                 call.respond(HttpStatusCode.BadRequest, "Unauthorized user!")
             } else {
-                val newAccessToken = jwtConfig.generateAccessToken(JwtConfig.JwtUser(receive.email))
-                val newRefreshToken = jwtConfig.generateRefreshToken(JwtConfig.JwtUser(receive.email))
+                val newAccessToken = jwtConfig.generateAccessToken(receive.email)
+                val newRefreshToken = jwtConfig.generateRefreshToken(receive.email)
 
                 Tokens.updateToken(receive.email, receive.refreshToken)
 
