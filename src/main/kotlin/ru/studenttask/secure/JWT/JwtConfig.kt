@@ -16,8 +16,8 @@ class JwtConfig(jwtSecret: String) {
         private const val jwtIssuer = "ru.studenttask"
         private const val jwtRealm = "ru.studenttask"
         private const val jwtAud = "inimitab1e"
-        private const val expiresInAccess = 120000
-        private const val expiresInRefresh = 120000000
+        private const val expiresInAccess = 604800000
+        private const val expiresInRefresh = 2419200000
 
         // claims
         private const val CLAIM_EMAIL = "email"

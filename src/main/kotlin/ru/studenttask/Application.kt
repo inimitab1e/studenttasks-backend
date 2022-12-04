@@ -9,6 +9,7 @@ import ru.studenttask.features.content.usersList.configureUsersListRouting
 import ru.studenttask.features.login.configureLoginRouting
 import ru.studenttask.features.refresh.configureRefreshRouting
 import ru.studenttask.features.register.configureRegisterRouting
+import ru.studenttask.features.validity.configureValidityRouting
 import ru.studenttask.plugins.*
 import ru.studenttask.secure.JWT.configureSecurity
 
@@ -24,5 +25,6 @@ fun main() {
         configureSerialization()
         configureUsersListRouting()
         configureSecurity()
+        configureValidityRouting()
     }.start(wait = true)
 }
