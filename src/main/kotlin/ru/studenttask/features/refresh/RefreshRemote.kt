@@ -4,8 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class RefreshReceiveRemote(
-    val email: String,
-    val refreshToken: String
+    val email: String
 )
 
 @Serializable
