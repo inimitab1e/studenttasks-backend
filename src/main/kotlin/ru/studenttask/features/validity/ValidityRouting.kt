@@ -10,7 +10,7 @@ fun Application.configureValidityRouting() {
     routing {
         authenticate {
             get("validity") {
-                call.respond(HttpStatusCode.OK, "Access token is valid")
+                call.respond(ValidityResponseRemote(message = "Access token is valid"))
             }
         }
     }
