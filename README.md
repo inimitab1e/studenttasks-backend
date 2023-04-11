@@ -16,9 +16,9 @@ dataSource.serverName=localhost
 ```
 Now you good to go.
 
-## Endpoints
-
 After successful starting server will be available at `http://localhost:8080`. But you can easly change it in file "studenttasks-backend/src/main/kotlin/ru/studenttask/Application.kt" by changing "host" params.
+
+## Endpoints
 
 ### Authorization
 
